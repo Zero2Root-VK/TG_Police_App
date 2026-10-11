@@ -1,0 +1,796 @@
+{
+  "projectId": "tgp",
+  "endpoint": "https://fra.cloud.appwrite.io/v1",
+  "tablesDB": [
+    {
+      "$id": "tgp",
+      "name": "TGP Mock Exam",
+      "enabled": true
+    }
+  ],
+  "tables": [
+    {
+      "$id": "papers",
+      "$permissions": [
+        "read(\"any\")"
+      ],
+      "databaseId": "tgp",
+      "name": "papers",
+      "enabled": true,
+      "rowSecurity": false,
+      "columns": [
+        {
+          "key": "track",
+          "type": "varchar",
+          "size": 16,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "stage",
+          "type": "varchar",
+          "size": 16,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "year",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "paperNo",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "series",
+          "type": "varchar",
+          "size": 8,
+          "required": false,
+          "array": false,
+          "default": ""
+        },
+        {
+          "key": "titleEn",
+          "type": "varchar",
+          "size": 255,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "titleTe",
+          "type": "varchar",
+          "size": 512,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "marks",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "durationMins",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "positiveMarks",
+          "type": "double",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "negativeMarks",
+          "type": "double",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "totalQuestions",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "reviewPending",
+          "type": "boolean",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "schemaVersion",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "contentHash",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "isFree",
+          "type": "boolean",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "updatedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_paper_track",
+          "type": "key",
+          "columns": [
+            "track"
+          ]
+        },
+        {
+          "key": "idx_paper_timeline",
+          "type": "key",
+          "columns": [
+            "updatedAt"
+          ],
+          "orders": [
+            "DESC"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "questions",
+      "$permissions": [
+        "read(\"any\")"
+      ],
+      "databaseId": "tgp",
+      "name": "questions",
+      "enabled": true,
+      "rowSecurity": false,
+      "columns": [
+        {
+          "key": "paperId",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "n",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "promptEn",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "promptTe",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "optionsEn",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "optionsTe",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "answer",
+          "type": "integer",
+          "required": false,
+          "array": false,
+          "default": -1
+        },
+        {
+          "key": "solutionEn",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "solutionTe",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "ruleEn",
+          "type": "varchar",
+          "size": 512,
+          "required": false,
+          "array": false,
+          "default": ""
+        },
+        {
+          "key": "ruleTe",
+          "type": "varchar",
+          "size": 512,
+          "required": false,
+          "array": false,
+          "default": ""
+        },
+        {
+          "key": "topic",
+          "type": "varchar",
+          "size": 128,
+          "required": false,
+          "array": false,
+          "default": ""
+        },
+        {
+          "key": "conceptKey",
+          "type": "varchar",
+          "size": 191,
+          "required": false,
+          "array": false,
+          "default": ""
+        },
+        {
+          "key": "version",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "format": "enum",
+          "elements": [
+            "reviewPending",
+            "approved",
+            "flagged"
+          ],
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "updatedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_q_paper_n",
+          "type": "unique",
+          "columns": [
+            "paperId",
+            "n"
+          ]
+        },
+        {
+          "key": "idx_q_timeline",
+          "type": "key",
+          "columns": [
+            "updatedAt"
+          ],
+          "orders": [
+            "DESC"
+          ]
+        },
+        {
+          "key": "idx_q_concept",
+          "type": "key",
+          "columns": [
+            "conceptKey"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "profiles",
+      "$permissions": [
+        "read(\"users\")",
+        "create(\"users\")",
+        "update(\"users\")"
+      ],
+      "databaseId": "tgp",
+      "name": "profiles",
+      "enabled": true,
+      "rowSecurity": true,
+      "columns": [
+        {
+          "key": "userId",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "role",
+          "type": "string",
+          "format": "enum",
+          "elements": [
+            "student",
+            "admin"
+          ],
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "name",
+          "type": "varchar",
+          "size": 128,
+          "required": false,
+          "array": false,
+          "default": ""
+        },
+        {
+          "key": "langPref",
+          "type": "varchar",
+          "size": 16,
+          "required": false,
+          "array": false,
+          "default": "en"
+        },
+        {
+          "key": "updatedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_profile_user",
+          "type": "unique",
+          "columns": [
+            "userId"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "entitlements",
+      "$permissions": [
+        "read(\"users\")"
+      ],
+      "databaseId": "tgp",
+      "name": "entitlements",
+      "enabled": true,
+      "rowSecurity": true,
+      "columns": [
+        {
+          "key": "userId",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "plan",
+          "type": "varchar",
+          "size": 32,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "productId",
+          "type": "varchar",
+          "size": 64,
+          "required": false,
+          "array": false,
+          "default": ""
+        },
+        {
+          "key": "purchaseToken",
+          "type": "varchar",
+          "size": 512,
+          "required": false,
+          "array": false,
+          "default": ""
+        },
+        {
+          "key": "expiresAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "updatedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_ent_user",
+          "type": "unique",
+          "columns": [
+            "userId"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "attempts",
+      "$permissions": [
+        "create(\"users\")",
+        "read(\"users\")",
+        "update(\"users\")"
+      ],
+      "databaseId": "tgp",
+      "name": "attempts",
+      "enabled": true,
+      "rowSecurity": true,
+      "columns": [
+        {
+          "key": "userId",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "paperId",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "answersJson",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "questionVersion",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "format": "enum",
+          "elements": [
+            "in_progress",
+            "submitted"
+          ],
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "startedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "submittedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "updatedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_attempt_user_paper",
+          "type": "key",
+          "columns": [
+            "userId",
+            "paperId"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "results",
+      "$permissions": [
+        "create(\"users\")",
+        "read(\"users\")"
+      ],
+      "databaseId": "tgp",
+      "name": "results",
+      "enabled": true,
+      "rowSecurity": true,
+      "columns": [
+        {
+          "key": "userId",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "paperId",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "score",
+          "type": "double",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "correct",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "wrong",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "skipped",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "sectionStatsJson",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "topicStatsJson",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "submittedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_result_user_paper",
+          "type": "key",
+          "columns": [
+            "userId",
+            "paperId"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "app_config",
+      "$permissions": [
+        "read(\"any\")"
+      ],
+      "databaseId": "tgp",
+      "name": "app_config",
+      "enabled": true,
+      "rowSecurity": false,
+      "columns": [
+        {
+          "key": "key",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "valueJson",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "updatedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_cfg_key",
+          "type": "unique",
+          "columns": [
+            "key"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "daily_ca",
+      "$permissions": [
+        "read(\"any\")"
+      ],
+      "databaseId": "tgp",
+      "name": "daily_ca",
+      "enabled": true,
+      "rowSecurity": false,
+      "columns": [
+        {
+          "key": "date",
+          "type": "datetime",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "subject",
+          "type": "varchar",
+          "size": 64,
+          "required": false,
+          "array": false,
+          "default": ""
+        },
+        {
+          "key": "access",
+          "type": "string",
+          "format": "enum",
+          "elements": [
+            "free",
+            "paid"
+          ],
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "questionsJson",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "publishedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_ca_date",
+          "type": "key",
+          "columns": [
+            "date"
+          ],
+          "orders": [
+            "DESC"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "notifications",
+      "$permissions": [
+        "read(\"any\")"
+      ],
+      "databaseId": "tgp",
+      "name": "notifications",
+      "enabled": true,
+      "rowSecurity": false,
+      "columns": [
+        {
+          "key": "title",
+          "type": "varchar",
+          "size": 255,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "body",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "audience",
+          "type": "string",
+          "format": "enum",
+          "elements": [
+            "all",
+            "si",
+            "constable"
+          ],
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "sentAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_notif_sent",
+          "type": "key",
+          "columns": [
+            "sentAt"
+          ],
+          "orders": [
+            "DESC"
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "audit_log",
+      "$permissions": [],
+      "databaseId": "tgp",
+      "name": "audit_log",
+      "enabled": true,
+      "rowSecurity": false,
+      "columns": [
+        {
+          "key": "actorId",
+          "type": "varchar",
+          "size": 64,
+          "required": false,
+          "array": false,
+          "default": ""
+        },
+        {
+          "key": "action",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "target",
+          "type": "varchar",
+          "size": 128,
+          "required": false,
+          "array": false,
+          "default": ""
+        },
+        {
+          "key": "beforeJson",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "afterJson",
+          "type": "longtext",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "at",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        }
+      ],
+      "indexes": []
+    }
+  ]
+}

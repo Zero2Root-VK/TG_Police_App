@@ -1,0 +1,237 @@
+{
+  "papers": [
+    {
+      "id": "constable-mains-2015",
+      "source": "Constable/2015/mains/constable-mains-2015.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": [
+        "q17: prompt.te missing",
+        "q18: prompt.te missing",
+        "q19: prompt.te missing",
+        "q20: prompt.te missing"
+      ]
+    },
+    {
+      "id": "constable-prelims-2015",
+      "source": "Constable/2015/prelims/constable-prelims-2015.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": [
+        "q1: prompt.te missing",
+        "q2: prompt.te missing",
+        "q3: prompt.te missing",
+        "q4: prompt.te missing",
+        "q5: prompt.te missing",
+        "q13: prompt.te missing",
+        "q14: prompt.te missing",
+        "q15: prompt.te missing",
+        "q16: prompt.te missing",
+        "q17: prompt.te missing",
+        "q18: prompt.te missing",
+        "q19: prompt.te missing",
+        "q20: prompt.te missing"
+      ]
+    },
+    {
+      "id": "constable-mains-2018",
+      "source": "Constable/2018/mains/constable-mains-2018.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": [
+        "q1: prompt.te missing",
+        "q2: prompt.te missing",
+        "q3: prompt.te missing",
+        "q4: prompt.te missing",
+        "q5: prompt.te missing",
+        "q6: prompt.te missing",
+        "q7: prompt.te missing",
+        "q13: prompt.te missing",
+        "q14: prompt.te missing"
+      ]
+    },
+    {
+      "id": "constable-prelims-2018",
+      "source": "Constable/2018/prelims/constable-prelims-2018.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": [
+        "q1: prompt.te missing",
+        "q2: prompt.te missing",
+        "q3: prompt.te missing",
+        "q4: prompt.te missing",
+        "q5: prompt.te missing",
+        "q6: prompt.te missing",
+        "q7: prompt.te missing",
+        "q8: prompt.te missing",
+        "q9: prompt.te missing",
+        "q10: prompt.te missing",
+        "q11: prompt.te missing",
+        "q12: prompt.te missing",
+        "q13: prompt.te missing",
+        "q14: prompt.te missing",
+        "q15: prompt.te missing",
+        "q16: prompt.te missing",
+        "q17: prompt.te missing",
+        "q18: prompt.te missing",
+        "q19: prompt.te missing",
+        "q20: prompt.te missing",
+        "q41: prompt.te missing",
+        "q146: prompt.te missing",
+        "q147: prompt.te missing",
+        "q148: prompt.te missing",
+        "q149: prompt.te missing",
+        "q168: prompt.te missing"
+      ]
+    },
+    {
+      "id": "constable-mains-2022",
+      "source": "Constable/2022/mains/constable-mains-2022.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": [
+        "q9: prompt.te missing",
+        "q10: prompt.te missing",
+        "q11: prompt.te missing",
+        "q12: prompt.te missing",
+        "q13: prompt.te missing",
+        "q14: prompt.te missing",
+        "q15: prompt.te missing",
+        "q16: prompt.te missing",
+        "q16: answer unknown (0) - needs key",
+        "q23: prompt.te missing",
+        "q24: prompt.te missing",
+        "q25: prompt.te missing"
+      ]
+    },
+    {
+      "id": "constable-prelims-2022",
+      "source": "Constable/2022/prelims/constable-prelims-2022.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": [
+        "q1: prompt.te missing",
+        "q2: prompt.te missing",
+        "q3: prompt.te missing",
+        "q4: prompt.te missing",
+        "q5: prompt.te missing",
+        "q6: prompt.te missing",
+        "q7: prompt.te missing",
+        "q8: prompt.te missing",
+        "q9: prompt.te missing",
+        "q10: prompt.te missing",
+        "q11: prompt.te missing",
+        "q12: prompt.te missing",
+        "q13: prompt.te missing",
+        "q14: prompt.te missing",
+        "q15: prompt.te missing",
+        "q16: prompt.te missing",
+        "q17: prompt.te missing",
+        "q18: prompt.te missing",
+        "q19: prompt.te missing",
+        "q20: prompt.te missing",
+        "q21: prompt.te missing",
+        "q22: prompt.te missing",
+        "q23: prompt.te missing",
+        "q24: prompt.te missing",
+        "q25: prompt.te missing",
+        "q29: prompt.te missing"
+      ]
+    },
+    {
+      "id": "si-mains-2016-ar",
+      "source": "SI/2015/mains/si-mains-2016-ar.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": [
+        "q94: answer unknown (0) - needs key",
+        "q121: answer unknown (0) - needs key",
+        "q131: answer unknown (0) - needs key",
+        "q136: answer unknown (0) - needs key",
+        "q140: answer unknown (0) - needs key",
+        "q171: answer unknown (0) - needs key"
+      ]
+    },
+    {
+      "id": "si-mains-2016-gs",
+      "source": "SI/2015/mains/si-mains-2016-gs.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": [
+        "q32: answer unknown (0) - needs key",
+        "q53: answer unknown (0) - needs key",
+        "q112: answer unknown (0) - needs key",
+        "q117: answer unknown (0) - needs key"
+      ]
+    },
+    {
+      "id": "si-prelims-2016-p2",
+      "source": "SI/2015/prelims/si-prelims-2016-p2.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "id": "si-mains-2018-ar",
+      "source": "SI/2018/mains/si-mains-2018-ar.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": [
+        "q103: answer unknown (0) - needs key",
+        "q104: answer unknown (0) - needs key",
+        "q116: answer unknown (0) - needs key",
+        "q117: answer unknown (0) - needs key",
+        "q141: answer unknown (0) - needs key",
+        "q142: answer unknown (0) - needs key",
+        "q154: answer unknown (0) - needs key",
+        "q170: answer unknown (0) - needs key",
+        "q189: options count = 0 (expected 4)",
+        "q190: options count = 0 (expected 4)",
+        "q191: options count = 0 (expected 4)",
+        "q196: answer unknown (0) - needs key"
+      ]
+    },
+    {
+      "id": "si-mains-2018-gs",
+      "source": "SI/2018/mains/si-mains-2018-gs.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "id": "si-prelims-2018-p1",
+      "source": "SI/2018/prelims/si-prelims-2018-p1.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "id": "si-mains-2023-ar",
+      "source": "SI/2022/mains/si-mains-2023-ar.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": [
+        "q24: prompt.te missing",
+        "q135: answer unknown (0) - needs key",
+        "q149: answer unknown (0) - needs key"
+      ]
+    },
+    {
+      "id": "si-mains-2023-gs",
+      "source": "SI/2022/mains/si-mains-2023-gs.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "id": "si-prelims-2022-gs",
+      "source": "SI/2022/prelims/si-prelims-2022-gs.json",
+      "questions": 200,
+      "errors": [],
+      "warnings": [
+        "q96: duplicate option text",
+        "q180: answer unknown (0) - needs key"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+R_DEF: Internal format may change without notice
+local
+drawable ic_tgp_shield
+drawable ic_tgp_shield_light
+font noto_sans_telugu

@@ -1,0 +1,39 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.tgp.mockexam.app-mergeDebugResources-1:/values-night-v8/values-night-v8.xml",
+            "map": [
+                {
+                    "source": "/root/.gradle/caches/9.4.1/transforms/a85083a2587b8e3575752a3dbe04bd39/transformed/core-splashscreen-1.2.0/res/values-night-v8/values-night-v8.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "4",
+                        "endColumns": "12",
+                        "endOffsets": "195"
+                    }
+                },
+                {
+                    "source": "/home/kali/TGP-APP/app/src/main/res/values-night/themes.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "375"
+                    },
+                    "to": {
+                        "startLines": "5",
+                        "startColumns": "4",
+                        "startOffsets": "200",
+                        "endLines": "9",
+                        "endColumns": "12",
+                        "endOffsets": "520"
+                    }
+                }
+            ]
+        }
+    ]
+}

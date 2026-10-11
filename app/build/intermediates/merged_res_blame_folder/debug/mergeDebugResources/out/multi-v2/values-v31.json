@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.tgp.mockexam.app-mergeDebugResources-1:/values-v31/values-v31.xml",
+            "map": [
+                {
+                    "source": "/root/.gradle/caches/9.4.1/transforms/a85083a2587b8e3575752a3dbe04bd39/transformed/core-splashscreen-1.2.0/res/values-v31/values-v31.xml",
+                    "from": {
+                        "startLines": "2,6,13",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,295,713",
+                        "endLines": "5,12,17",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "290,708,937"
+                    }
+                }
+            ]
+        }
+    ]
+}

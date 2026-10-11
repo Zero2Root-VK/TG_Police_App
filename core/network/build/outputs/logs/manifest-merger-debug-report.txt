@@ -1,0 +1,16 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/kali/TGP-APP/core/network/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15434175342773632800.xml:2:13-83
+INJECTED from /home/kali/TGP-APP/core/network/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15434175342773632800.xml:2:13-83
+	package
+		INJECTED from /home/kali/TGP-APP/core/network/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15434175342773632800.xml
+	xmlns:android
+		ADDED from /home/kali/TGP-APP/core/network/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15434175342773632800.xml:2:23-81
+uses-sdk
+INJECTED from /home/kali/TGP-APP/core/network/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15434175342773632800.xml reason: use-sdk injection requested
+INJECTED from /home/kali/TGP-APP/core/network/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15434175342773632800.xml
+INJECTED from /home/kali/TGP-APP/core/network/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15434175342773632800.xml
+	android:targetSdkVersion
+		INJECTED from /home/kali/TGP-APP/core/network/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15434175342773632800.xml
+	android:minSdkVersion
+		INJECTED from /home/kali/TGP-APP/core/network/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest15434175342773632800.xml

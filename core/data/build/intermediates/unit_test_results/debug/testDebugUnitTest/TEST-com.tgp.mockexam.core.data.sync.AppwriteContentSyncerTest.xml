@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tgp.mockexam.core.data.sync.AppwriteContentSyncerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-11T10:45:54.167Z" hostname="QRCLP-174" time="0.13">
+  <properties/>
+  <testcase name="sync fetches questions when hash changed" classname="com.tgp.mockexam.core.data.sync.AppwriteContentSyncerTest" time="0.11"/>
+  <testcase name="sync paginates questions across pages" classname="com.tgp.mockexam.core.data.sync.AppwriteContentSyncerTest" time="0.003"/>
+  <testcase name="unknown answers map to domain UNKNOWN and skip scoring" classname="com.tgp.mockexam.core.data.sync.AppwriteContentSyncerTest" time="0.011"/>
+  <testcase name="sync skips unchanged papers (matching hash and count)" classname="com.tgp.mockexam.core.data.sync.AppwriteContentSyncerTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

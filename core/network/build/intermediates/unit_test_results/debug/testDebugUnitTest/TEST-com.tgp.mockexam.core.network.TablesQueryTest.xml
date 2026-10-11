@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tgp.mockexam.core.network.TablesQueryTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-11T10:45:54.083Z" hostname="QRCLP-174" time="0.137">
+  <properties/>
+  <testcase name="offsetQuery_encodes_likeBackend" classname="com.tgp.mockexam.core.network.TablesQueryTest" time="0.115"/>
+  <testcase name="equalQuery_encodes_likeBackend" classname="com.tgp.mockexam.core.network.TablesQueryTest" time="0.0"/>
+  <testcase name="rowsResponse_decodes_ignoringUnknownFields" classname="com.tgp.mockexam.core.network.TablesQueryTest" time="0.015"/>
+  <testcase name="limitQuery_encodes_likeBackend" classname="com.tgp.mockexam.core.network.TablesQueryTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

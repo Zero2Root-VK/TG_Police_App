@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-11T04:26:24+00:00",
+  "papers": [
+    {
+      "id": "constable-mains-2015",
+      "source": "Constable/2015/mains/constable-mains-2015.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 4
+    },
+    {
+      "id": "constable-prelims-2015",
+      "source": "Constable/2015/prelims/constable-prelims-2015.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 13
+    },
+    {
+      "id": "constable-mains-2018",
+      "source": "Constable/2018/mains/constable-mains-2018.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 9
+    },
+    {
+      "id": "constable-prelims-2018",
+      "source": "Constable/2018/prelims/constable-prelims-2018.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 26
+    },
+    {
+      "id": "constable-mains-2022",
+      "source": "Constable/2022/mains/constable-mains-2022.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 12
+    },
+    {
+      "id": "constable-prelims-2022",
+      "source": "Constable/2022/prelims/constable-prelims-2022.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 26
+    },
+    {
+      "id": "si-mains-2016-ar",
+      "source": "SI/2015/mains/si-mains-2016-ar.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 6
+    },
+    {
+      "id": "si-mains-2016-gs",
+      "source": "SI/2015/mains/si-mains-2016-gs.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 4
+    },
+    {
+      "id": "si-prelims-2016-p2",
+      "source": "SI/2015/prelims/si-prelims-2016-p2.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "id": "si-mains-2018-ar",
+      "source": "SI/2018/mains/si-mains-2018-ar.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 12
+    },
+    {
+      "id": "si-mains-2018-gs",
+      "source": "SI/2018/mains/si-mains-2018-gs.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "id": "si-prelims-2018-p1",
+      "source": "SI/2018/prelims/si-prelims-2018-p1.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "id": "si-mains-2023-ar",
+      "source": "SI/2022/mains/si-mains-2023-ar.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 3
+    },
+    {
+      "id": "si-mains-2023-gs",
+      "source": "SI/2022/mains/si-mains-2023-gs.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "id": "si-prelims-2022-gs",
+      "source": "SI/2022/prelims/si-prelims-2022-gs.json",
+      "questions": 200,
+      "errors": 0,
+      "warnings": 2
+    }
+  ],
+  "totals": {
+    "papers": 15,
+    "questions": 3000,
+    "errors": 0,
+    "warnings": 117
+  }
+}

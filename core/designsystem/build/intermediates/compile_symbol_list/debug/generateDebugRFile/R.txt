@@ -1,0 +1,3 @@
+int drawable ic_tgp_shield 0x0
+int drawable ic_tgp_shield_light 0x0
+int font noto_sans_telugu 0x0

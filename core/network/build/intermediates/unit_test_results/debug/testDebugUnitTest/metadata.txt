@@ -1,0 +1,4 @@
+modulePath=:core:network
+testedVariantName=debug
+testSuiteName=UnitTest
+testTarget=host

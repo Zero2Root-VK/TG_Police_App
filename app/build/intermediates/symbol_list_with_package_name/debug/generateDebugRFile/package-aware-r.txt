@@ -1,0 +1,9 @@
+com.tgp.mockexam
+color ic_launcher_background
+color tgp_brand_navy
+drawable ic_launcher_foreground
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style Theme_TGP
+style Theme_TGP_Splash

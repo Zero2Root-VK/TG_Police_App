@@ -1,0 +1,186 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.tgp.mockexam"
+4    android:versionCode="1"
+5    android:versionName="0.1.0" >
+6
+7    <uses-sdk
+7-->INJECTED
+8        android:minSdkVersion="26"
+8-->INJECTED
+9        android:targetSdkVersion="37" />
+9-->INJECTED
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:4:5-67
+11-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:4:22-64
+12
+13    <permission
+13-->[androidx.core:core:1.19.1] /root/.gradle/caches/9.4.1/transforms/91e4a20c83478ac560114205fc554cb1/transformed/core-1.19.1/AndroidManifest.xml:22:5-24:47
+14        android:name="com.tgp.mockexam.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+14-->[androidx.core:core:1.19.1] /root/.gradle/caches/9.4.1/transforms/91e4a20c83478ac560114205fc554cb1/transformed/core-1.19.1/AndroidManifest.xml:23:9-81
+15        android:protectionLevel="signature" />
+15-->[androidx.core:core:1.19.1] /root/.gradle/caches/9.4.1/transforms/91e4a20c83478ac560114205fc554cb1/transformed/core-1.19.1/AndroidManifest.xml:24:9-44
+16
+17    <uses-permission android:name="com.tgp.mockexam.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+17-->[androidx.core:core:1.19.1] /root/.gradle/caches/9.4.1/transforms/91e4a20c83478ac560114205fc554cb1/transformed/core-1.19.1/AndroidManifest.xml:26:5-97
+17-->[androidx.core:core:1.19.1] /root/.gradle/caches/9.4.1/transforms/91e4a20c83478ac560114205fc554cb1/transformed/core-1.19.1/AndroidManifest.xml:26:22-94
+18
+19    <application
+19-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:7:5-33:19
+20        android:name="com.tgp.mockexam.TgpApplication"
+20-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:8:9-39
+21        android:allowBackup="true"
+21-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:9:9-35
+22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+22-->[androidx.core:core:1.19.1] /root/.gradle/caches/9.4.1/transforms/91e4a20c83478ac560114205fc554cb1/transformed/core-1.19.1/AndroidManifest.xml:28:18-86
+23        android:debuggable="true"
+24        android:extractNativeLibs="false"
+24-->INJECTED
+25        android:icon="@mipmap/ic_launcher"
+25-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:10:9-43
+26        android:label="@string/app_name"
+26-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:11:9-41
+27        android:roundIcon="@mipmap/ic_launcher_round"
+27-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:12:9-54
+28        android:supportsRtl="true"
+28-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:13:9-35
+29        android:theme="@style/Theme.TGP" >
+29-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:14:9-41
+30        <activity
+30-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:16:9-32:20
+31            android:name="com.tgp.mockexam.MainActivity"
+31-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:17:13-41
+32            android:exported="true"
+32-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:18:13-36
+33            android:launchMode="singleTop"
+33-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:19:13-43
+34            android:theme="@style/Theme.TGP.Splash"
+34-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:20:13-52
+35            android:windowSoftInputMode="adjustResize" >
+35-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:21:13-55
+36            <intent-filter>
+36-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:22:13-25:29
+37                <action android:name="android.intent.action.MAIN" />
+37-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:23:17-69
+37-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:23:25-66
+38
+39                <category android:name="android.intent.category.LAUNCHER" />
+39-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:24:17-77
+39-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:24:27-74
+40            </intent-filter>
+41            <intent-filter>
+41-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:26:13-31:29
+42                <action android:name="android.intent.action.VIEW" />
+42-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:27:17-69
+42-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:27:25-66
+43
+44                <category android:name="android.intent.category.DEFAULT" />
+44-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:28:17-76
+44-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:28:27-73
+45                <category android:name="android.intent.category.BROWSABLE" />
+45-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:29:17-78
+45-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:29:27-75
+46
+47                <data android:scheme="appwrite-callback-tgp" />
+47-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:30:17-64
+47-->/home/kali/TGP-APP/app/src/main/AndroidManifest.xml:30:23-61
+48            </intent-filter>
+49        </activity>
+50        <activity
+50-->[androidx.compose.ui:ui-tooling-android:1.12.1] /root/.gradle/caches/9.4.1/transforms/5b25a50d539256c0d5362fe34bfae102/transformed/ui-tooling/AndroidManifest.xml:23:9-25:39
+51            android:name="androidx.compose.ui.tooling.PreviewActivity"
+51-->[androidx.compose.ui:ui-tooling-android:1.12.1] /root/.gradle/caches/9.4.1/transforms/5b25a50d539256c0d5362fe34bfae102/transformed/ui-tooling/AndroidManifest.xml:24:13-71
+52            android:exported="true" />
+52-->[androidx.compose.ui:ui-tooling-android:1.12.1] /root/.gradle/caches/9.4.1/transforms/5b25a50d539256c0d5362fe34bfae102/transformed/ui-tooling/AndroidManifest.xml:25:13-36
+53
+54        <uses-library
+54-->[androidx.window:window:1.5.0] /root/.gradle/caches/9.4.1/transforms/0ec31521b314728d7f5eae77a8078013/transformed/window-1.5.0/AndroidManifest.xml:23:9-25:40
+55            android:name="androidx.window.extensions"
+55-->[androidx.window:window:1.5.0] /root/.gradle/caches/9.4.1/transforms/0ec31521b314728d7f5eae77a8078013/transformed/window-1.5.0/AndroidManifest.xml:24:13-54
+56            android:required="false" />
+56-->[androidx.window:window:1.5.0] /root/.gradle/caches/9.4.1/transforms/0ec31521b314728d7f5eae77a8078013/transformed/window-1.5.0/AndroidManifest.xml:25:13-37
+57        <uses-library
+57-->[androidx.window:window:1.5.0] /root/.gradle/caches/9.4.1/transforms/0ec31521b314728d7f5eae77a8078013/transformed/window-1.5.0/AndroidManifest.xml:26:9-28:40
+58            android:name="androidx.window.sidecar"
+58-->[androidx.window:window:1.5.0] /root/.gradle/caches/9.4.1/transforms/0ec31521b314728d7f5eae77a8078013/transformed/window-1.5.0/AndroidManifest.xml:27:13-51
+59            android:required="false" />
+59-->[androidx.window:window:1.5.0] /root/.gradle/caches/9.4.1/transforms/0ec31521b314728d7f5eae77a8078013/transformed/window-1.5.0/AndroidManifest.xml:28:13-37
+60
+61        <provider
+61-->[androidx.emoji2:emoji2:1.4.0] /root/.gradle/caches/9.4.1/transforms/e481c3d273d4e1b355c15fc899280ed5/transformed/emoji2-1.4.0/AndroidManifest.xml:24:9-32:20
+62            android:name="androidx.startup.InitializationProvider"
+62-->[androidx.emoji2:emoji2:1.4.0] /root/.gradle/caches/9.4.1/transforms/e481c3d273d4e1b355c15fc899280ed5/transformed/emoji2-1.4.0/AndroidManifest.xml:25:13-67
+63            android:authorities="com.tgp.mockexam.androidx-startup"
+63-->[androidx.emoji2:emoji2:1.4.0] /root/.gradle/caches/9.4.1/transforms/e481c3d273d4e1b355c15fc899280ed5/transformed/emoji2-1.4.0/AndroidManifest.xml:26:13-68
+64            android:exported="false" >
+64-->[androidx.emoji2:emoji2:1.4.0] /root/.gradle/caches/9.4.1/transforms/e481c3d273d4e1b355c15fc899280ed5/transformed/emoji2-1.4.0/AndroidManifest.xml:27:13-37
+65            <meta-data
+65-->[androidx.emoji2:emoji2:1.4.0] /root/.gradle/caches/9.4.1/transforms/e481c3d273d4e1b355c15fc899280ed5/transformed/emoji2-1.4.0/AndroidManifest.xml:29:13-31:52
+66                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+66-->[androidx.emoji2:emoji2:1.4.0] /root/.gradle/caches/9.4.1/transforms/e481c3d273d4e1b355c15fc899280ed5/transformed/emoji2-1.4.0/AndroidManifest.xml:30:17-75
+67                android:value="androidx.startup" />
+67-->[androidx.emoji2:emoji2:1.4.0] /root/.gradle/caches/9.4.1/transforms/e481c3d273d4e1b355c15fc899280ed5/transformed/emoji2-1.4.0/AndroidManifest.xml:31:17-49
+68            <meta-data
+68-->[androidx.lifecycle:lifecycle-process:2.11.0] /root/.gradle/caches/9.4.1/transforms/9db83395cd10fd3be8fd54b2e69253e7/transformed/lifecycle-process-2.11.0/AndroidManifest.xml:29:13-31:52
+69                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+69-->[androidx.lifecycle:lifecycle-process:2.11.0] /root/.gradle/caches/9.4.1/transforms/9db83395cd10fd3be8fd54b2e69253e7/transformed/lifecycle-process-2.11.0/AndroidManifest.xml:30:17-78
+70                android:value="androidx.startup" />
+70-->[androidx.lifecycle:lifecycle-process:2.11.0] /root/.gradle/caches/9.4.1/transforms/9db83395cd10fd3be8fd54b2e69253e7/transformed/lifecycle-process-2.11.0/AndroidManifest.xml:31:17-49
+71            <meta-data
+71-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
+72                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+72-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+73                android:value="androidx.startup" />
+73-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
+74        </provider>
+75
+76        <service
+76-->[androidx.room:room-runtime-android:2.8.5] /root/.gradle/caches/9.4.1/transforms/e3370d99dfd434b919cabd89f3239060/transformed/room-runtime/AndroidManifest.xml:24:9-28:63
+77            android:name="androidx.room.MultiInstanceInvalidationService"
+77-->[androidx.room:room-runtime-android:2.8.5] /root/.gradle/caches/9.4.1/transforms/e3370d99dfd434b919cabd89f3239060/transformed/room-runtime/AndroidManifest.xml:25:13-74
+78            android:directBootAware="true"
+78-->[androidx.room:room-runtime-android:2.8.5] /root/.gradle/caches/9.4.1/transforms/e3370d99dfd434b919cabd89f3239060/transformed/room-runtime/AndroidManifest.xml:26:13-43
+79            android:exported="false" />
+79-->[androidx.room:room-runtime-android:2.8.5] /root/.gradle/caches/9.4.1/transforms/e3370d99dfd434b919cabd89f3239060/transformed/room-runtime/AndroidManifest.xml:27:13-37
+80
+81        <receiver
+81-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
+82            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+82-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
+83            android:directBootAware="false"
+83-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
+84            android:enabled="true"
+84-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
+85            android:exported="true"
+85-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
+86            android:permission="android.permission.DUMP" >
+86-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
+87            <intent-filter>
+87-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
+88                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+88-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
+88-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
+89            </intent-filter>
+90            <intent-filter>
+90-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
+91                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+91-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
+91-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
+92            </intent-filter>
+93            <intent-filter>
+93-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
+94                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+94-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
+94-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
+95            </intent-filter>
+96            <intent-filter>
+96-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
+97                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+97-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
+97-->[androidx.profileinstaller:profileinstaller:1.4.0] /root/.gradle/caches/9.4.1/transforms/72ba1f90d6fc96312a4ad17778e5c804/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92
+98            </intent-filter>
+99        </receiver>
+100    </application>
+101
+102</manifest>

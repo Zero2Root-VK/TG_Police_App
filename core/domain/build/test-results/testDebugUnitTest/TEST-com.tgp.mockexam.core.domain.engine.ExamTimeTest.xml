@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tgp.mockexam.core.domain.engine.ExamTimeTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-11T10:45:54.100Z" hostname="QRCLP-174" time="0.016">
+  <properties/>
+  <testcase name="elapsed time is subtracted from monotonic clock" classname="com.tgp.mockexam.core.domain.engine.ExamTimeTest" time="0.006"/>
+  <testcase name="full duration remaining at start" classname="com.tgp.mockexam.core.domain.engine.ExamTimeTest" time="0.0"/>
+  <testcase name="after reboot falls back to epoch clock" classname="com.tgp.mockexam.core.domain.engine.ExamTimeTest" time="0.001"/>
+  <testcase name="remaining never goes below zero" classname="com.tgp.mockexam.core.domain.engine.ExamTimeTest" time="0.0"/>
+  <testcase name="paused time is not counted against the candidate" classname="com.tgp.mockexam.core.domain.engine.ExamTimeTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

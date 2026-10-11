@@ -1,0 +1,1 @@
+-keep,allowobfuscation,allowshrinking class com.tgp.mockexam.feature.currentaffairs.CurrentAffairsViewModel

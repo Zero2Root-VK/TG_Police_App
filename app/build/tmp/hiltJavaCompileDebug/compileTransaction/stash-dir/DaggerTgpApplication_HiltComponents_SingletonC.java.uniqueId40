@@ -1,0 +1,833 @@
+package com.tgp.mockexam;
+
+import android.app.Activity;
+import android.app.Service;
+import android.view.View;
+import androidx.datastore.core.DataStore;
+import androidx.datastore.preferences.core.Preferences;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.SavedStateHandle;
+import androidx.lifecycle.ViewModel;
+import com.tgp.mockexam.bootstrap.BootstrapViewModel;
+import com.tgp.mockexam.bootstrap.BootstrapViewModel_HiltModules;
+import com.tgp.mockexam.bootstrap.BootstrapViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
+import com.tgp.mockexam.bootstrap.BootstrapViewModel_HiltModules_KeyModule_Provide_LazyMapKey;
+import com.tgp.mockexam.core.common.DispatcherProvider;
+import com.tgp.mockexam.core.common.di.DispatcherModule_ProvideDispatcherProviderFactory;
+import com.tgp.mockexam.core.data.auth.AppwriteAuthRepository;
+import com.tgp.mockexam.core.data.di.DataModule_Companion_ProvideAccountClientFactory;
+import com.tgp.mockexam.core.data.di.DataModule_Companion_ProvideAppwriteConfigFactory;
+import com.tgp.mockexam.core.data.di.DataModule_Companion_ProvideTablesClientFactory;
+import com.tgp.mockexam.core.data.repository.AssetPaperRepository;
+import com.tgp.mockexam.core.data.repository.CachedPaperRepository;
+import com.tgp.mockexam.core.data.repository.CurrentAffairsRepositoryImpl;
+import com.tgp.mockexam.core.data.repository.RoomExamSessionRepository;
+import com.tgp.mockexam.core.data.sync.AppwriteContentSyncer;
+import com.tgp.mockexam.core.database.TgpDatabase;
+import com.tgp.mockexam.core.database.dao.ContentDao;
+import com.tgp.mockexam.core.database.dao.ExamSessionDao;
+import com.tgp.mockexam.core.database.di.DatabaseModule_ProvideContentDaoFactory;
+import com.tgp.mockexam.core.database.di.DatabaseModule_ProvideExamSessionDaoFactory;
+import com.tgp.mockexam.core.database.di.DatabaseModule_ProvideTgpDatabaseFactory;
+import com.tgp.mockexam.core.datastore.DefaultSessionRepository;
+import com.tgp.mockexam.core.datastore.DefaultUserPreferencesRepository;
+import com.tgp.mockexam.core.datastore.di.DatastoreModule_ProvideDataStoreFactory;
+import com.tgp.mockexam.core.domain.repository.CurrentAffairsRepository;
+import com.tgp.mockexam.core.domain.repository.ExamSessionRepository;
+import com.tgp.mockexam.core.domain.usecase.ObserveExamRunUseCase;
+import com.tgp.mockexam.core.domain.usecase.ResetExamUseCase;
+import com.tgp.mockexam.core.domain.usecase.SaveAnswerUseCase;
+import com.tgp.mockexam.core.domain.usecase.SetCurrentQuestionUseCase;
+import com.tgp.mockexam.core.domain.usecase.StartExamUseCase;
+import com.tgp.mockexam.core.domain.usecase.SubmitExamUseCase;
+import com.tgp.mockexam.core.network.AccountClient;
+import com.tgp.mockexam.core.network.AppwriteConfig;
+import com.tgp.mockexam.core.network.TablesClient;
+import com.tgp.mockexam.feature.auth.AuthViewModel;
+import com.tgp.mockexam.feature.auth.AuthViewModel_HiltModules;
+import com.tgp.mockexam.feature.auth.AuthViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
+import com.tgp.mockexam.feature.auth.AuthViewModel_HiltModules_KeyModule_Provide_LazyMapKey;
+import com.tgp.mockexam.feature.auth.OnboardingViewModel;
+import com.tgp.mockexam.feature.auth.OnboardingViewModel_HiltModules;
+import com.tgp.mockexam.feature.auth.OnboardingViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
+import com.tgp.mockexam.feature.auth.OnboardingViewModel_HiltModules_KeyModule_Provide_LazyMapKey;
+import com.tgp.mockexam.feature.catalog.CatalogViewModel;
+import com.tgp.mockexam.feature.catalog.CatalogViewModel_HiltModules;
+import com.tgp.mockexam.feature.catalog.CatalogViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
+import com.tgp.mockexam.feature.catalog.CatalogViewModel_HiltModules_KeyModule_Provide_LazyMapKey;
+import com.tgp.mockexam.feature.currentaffairs.CurrentAffairsViewModel;
+import com.tgp.mockexam.feature.currentaffairs.CurrentAffairsViewModel_HiltModules;
+import com.tgp.mockexam.feature.currentaffairs.CurrentAffairsViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
+import com.tgp.mockexam.feature.currentaffairs.CurrentAffairsViewModel_HiltModules_KeyModule_Provide_LazyMapKey;
+import com.tgp.mockexam.feature.exam.ExamViewModel;
+import com.tgp.mockexam.feature.exam.ExamViewModel_HiltModules;
+import com.tgp.mockexam.feature.exam.ExamViewModel_HiltModules_BindsModule_Bind_LazyMapKey;
+import com.tgp.mockexam.feature.exam.ExamViewModel_HiltModules_KeyModule_Provide_LazyMapKey;
+import com.tgp.mockexam.feature.home.HomeViewModel;
+import com.tgp.mockexam.feature.home.HomeViewModel_HiltModules;
+import com.tgp.mockexam.feature.home.HomeViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
+import com.tgp.mockexam.feature.home.HomeViewModel_HiltModules_KeyModule_Provide_LazyMapKey;
+import dagger.hilt.android.ActivityRetainedLifecycle;
+import dagger.hilt.android.ViewModelLifecycle;
+import dagger.hilt.android.internal.builders.ActivityComponentBuilder;
+import dagger.hilt.android.internal.builders.ActivityRetainedComponentBuilder;
+import dagger.hilt.android.internal.builders.FragmentComponentBuilder;
+import dagger.hilt.android.internal.builders.ServiceComponentBuilder;
+import dagger.hilt.android.internal.builders.ViewComponentBuilder;
+import dagger.hilt.android.internal.builders.ViewModelComponentBuilder;
+import dagger.hilt.android.internal.builders.ViewWithFragmentComponentBuilder;
+import dagger.hilt.android.internal.lifecycle.DefaultViewModelFactories;
+import dagger.hilt.android.internal.lifecycle.DefaultViewModelFactories_InternalFactoryFactory_Factory;
+import dagger.hilt.android.internal.managers.ActivityRetainedComponentManager_LifecycleModule_ProvideActivityRetainedLifecycleFactory;
+import dagger.hilt.android.internal.managers.SavedStateHandleHolder;
+import dagger.hilt.android.internal.modules.ApplicationContextModule;
+import dagger.hilt.android.internal.modules.ApplicationContextModule_ProvideContextFactory;
+import dagger.internal.DaggerGenerated;
+import dagger.internal.DoubleCheck;
+import dagger.internal.LazyClassKeyMap;
+import dagger.internal.MapBuilder;
+import dagger.internal.Preconditions;
+import dagger.internal.Provider;
+import dagger.internal.SingleCheck;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import javax.annotation.processing.Generated;
+
+@DaggerGenerated
+@Generated(
+    value = "dagger.internal.codegen.ComponentProcessor",
+    comments = "https://dagger.dev"
+)
+@SuppressWarnings({
+    "unchecked",
+    "rawtypes",
+    "KotlinInternal",
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation",
+    "nullness:initialization.field.uninitialized"
+})
+public final class DaggerTgpApplication_HiltComponents_SingletonC {
+  private DaggerTgpApplication_HiltComponents_SingletonC() {
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static final class Builder {
+    private ApplicationContextModule applicationContextModule;
+
+    private Builder() {
+    }
+
+    public Builder applicationContextModule(ApplicationContextModule applicationContextModule) {
+      this.applicationContextModule = Preconditions.checkNotNull(applicationContextModule);
+      return this;
+    }
+
+    public TgpApplication_HiltComponents.SingletonC build() {
+      Preconditions.checkBuilderRequirement(applicationContextModule, ApplicationContextModule.class);
+      return new SingletonCImpl(applicationContextModule);
+    }
+  }
+
+  private static final class ActivityRetainedCBuilder implements TgpApplication_HiltComponents.ActivityRetainedC.Builder {
+    private final SingletonCImpl singletonCImpl;
+
+    private SavedStateHandleHolder savedStateHandleHolder;
+
+    private ActivityRetainedCBuilder(SingletonCImpl singletonCImpl) {
+      this.singletonCImpl = singletonCImpl;
+    }
+
+    @Override
+    public ActivityRetainedCBuilder savedStateHandleHolder(
+        SavedStateHandleHolder savedStateHandleHolder) {
+      this.savedStateHandleHolder = Preconditions.checkNotNull(savedStateHandleHolder);
+      return this;
+    }
+
+    @Override
+    public TgpApplication_HiltComponents.ActivityRetainedC build() {
+      Preconditions.checkBuilderRequirement(savedStateHandleHolder, SavedStateHandleHolder.class);
+      return new ActivityRetainedCImpl(singletonCImpl, savedStateHandleHolder);
+    }
+  }
+
+  private static final class ActivityCBuilder implements TgpApplication_HiltComponents.ActivityC.Builder {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ActivityRetainedCImpl activityRetainedCImpl;
+
+    private Activity activity;
+
+    private ActivityCBuilder(SingletonCImpl singletonCImpl,
+        ActivityRetainedCImpl activityRetainedCImpl) {
+      this.singletonCImpl = singletonCImpl;
+      this.activityRetainedCImpl = activityRetainedCImpl;
+    }
+
+    @Override
+    public ActivityCBuilder activity(Activity activity) {
+      this.activity = Preconditions.checkNotNull(activity);
+      return this;
+    }
+
+    @Override
+    public TgpApplication_HiltComponents.ActivityC build() {
+      Preconditions.checkBuilderRequirement(activity, Activity.class);
+      return new ActivityCImpl(singletonCImpl, activityRetainedCImpl, activity);
+    }
+  }
+
+  private static final class FragmentCBuilder implements TgpApplication_HiltComponents.FragmentC.Builder {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ActivityRetainedCImpl activityRetainedCImpl;
+
+    private final ActivityCImpl activityCImpl;
+
+    private Fragment fragment;
+
+    private FragmentCBuilder(SingletonCImpl singletonCImpl,
+        ActivityRetainedCImpl activityRetainedCImpl, ActivityCImpl activityCImpl) {
+      this.singletonCImpl = singletonCImpl;
+      this.activityRetainedCImpl = activityRetainedCImpl;
+      this.activityCImpl = activityCImpl;
+    }
+
+    @Override
+    public FragmentCBuilder fragment(Fragment fragment) {
+      this.fragment = Preconditions.checkNotNull(fragment);
+      return this;
+    }
+
+    @Override
+    public TgpApplication_HiltComponents.FragmentC build() {
+      Preconditions.checkBuilderRequirement(fragment, Fragment.class);
+      return new FragmentCImpl(singletonCImpl, activityRetainedCImpl, activityCImpl, fragment);
+    }
+  }
+
+  private static final class ViewWithFragmentCBuilder implements TgpApplication_HiltComponents.ViewWithFragmentC.Builder {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ActivityRetainedCImpl activityRetainedCImpl;
+
+    private final ActivityCImpl activityCImpl;
+
+    private final FragmentCImpl fragmentCImpl;
+
+    private View view;
+
+    private ViewWithFragmentCBuilder(SingletonCImpl singletonCImpl,
+        ActivityRetainedCImpl activityRetainedCImpl, ActivityCImpl activityCImpl,
+        FragmentCImpl fragmentCImpl) {
+      this.singletonCImpl = singletonCImpl;
+      this.activityRetainedCImpl = activityRetainedCImpl;
+      this.activityCImpl = activityCImpl;
+      this.fragmentCImpl = fragmentCImpl;
+    }
+
+    @Override
+    public ViewWithFragmentCBuilder view(View view) {
+      this.view = Preconditions.checkNotNull(view);
+      return this;
+    }
+
+    @Override
+    public TgpApplication_HiltComponents.ViewWithFragmentC build() {
+      Preconditions.checkBuilderRequirement(view, View.class);
+      return new ViewWithFragmentCImpl(singletonCImpl, activityRetainedCImpl, activityCImpl, fragmentCImpl, view);
+    }
+  }
+
+  private static final class ViewCBuilder implements TgpApplication_HiltComponents.ViewC.Builder {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ActivityRetainedCImpl activityRetainedCImpl;
+
+    private final ActivityCImpl activityCImpl;
+
+    private View view;
+
+    private ViewCBuilder(SingletonCImpl singletonCImpl, ActivityRetainedCImpl activityRetainedCImpl,
+        ActivityCImpl activityCImpl) {
+      this.singletonCImpl = singletonCImpl;
+      this.activityRetainedCImpl = activityRetainedCImpl;
+      this.activityCImpl = activityCImpl;
+    }
+
+    @Override
+    public ViewCBuilder view(View view) {
+      this.view = Preconditions.checkNotNull(view);
+      return this;
+    }
+
+    @Override
+    public TgpApplication_HiltComponents.ViewC build() {
+      Preconditions.checkBuilderRequirement(view, View.class);
+      return new ViewCImpl(singletonCImpl, activityRetainedCImpl, activityCImpl, view);
+    }
+  }
+
+  private static final class ViewModelCBuilder implements TgpApplication_HiltComponents.ViewModelC.Builder {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ActivityRetainedCImpl activityRetainedCImpl;
+
+    private SavedStateHandle savedStateHandle;
+
+    private ViewModelLifecycle viewModelLifecycle;
+
+    private ViewModelCBuilder(SingletonCImpl singletonCImpl,
+        ActivityRetainedCImpl activityRetainedCImpl) {
+      this.singletonCImpl = singletonCImpl;
+      this.activityRetainedCImpl = activityRetainedCImpl;
+    }
+
+    @Override
+    public ViewModelCBuilder savedStateHandle(SavedStateHandle handle) {
+      this.savedStateHandle = Preconditions.checkNotNull(handle);
+      return this;
+    }
+
+    @Override
+    public ViewModelCBuilder viewModelLifecycle(ViewModelLifecycle viewModelLifecycle) {
+      this.viewModelLifecycle = Preconditions.checkNotNull(viewModelLifecycle);
+      return this;
+    }
+
+    @Override
+    public TgpApplication_HiltComponents.ViewModelC build() {
+      Preconditions.checkBuilderRequirement(savedStateHandle, SavedStateHandle.class);
+      Preconditions.checkBuilderRequirement(viewModelLifecycle, ViewModelLifecycle.class);
+      return new ViewModelCImpl(singletonCImpl, activityRetainedCImpl, savedStateHandle, viewModelLifecycle);
+    }
+  }
+
+  private static final class ServiceCBuilder implements TgpApplication_HiltComponents.ServiceC.Builder {
+    private final SingletonCImpl singletonCImpl;
+
+    private Service service;
+
+    private ServiceCBuilder(SingletonCImpl singletonCImpl) {
+      this.singletonCImpl = singletonCImpl;
+    }
+
+    @Override
+    public ServiceCBuilder service(Service service) {
+      this.service = Preconditions.checkNotNull(service);
+      return this;
+    }
+
+    @Override
+    public TgpApplication_HiltComponents.ServiceC build() {
+      Preconditions.checkBuilderRequirement(service, Service.class);
+      return new ServiceCImpl(singletonCImpl, service);
+    }
+  }
+
+  private static final class ViewWithFragmentCImpl extends TgpApplication_HiltComponents.ViewWithFragmentC {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ActivityRetainedCImpl activityRetainedCImpl;
+
+    private final ActivityCImpl activityCImpl;
+
+    private final FragmentCImpl fragmentCImpl;
+
+    private final ViewWithFragmentCImpl viewWithFragmentCImpl = this;
+
+    ViewWithFragmentCImpl(SingletonCImpl singletonCImpl,
+        ActivityRetainedCImpl activityRetainedCImpl, ActivityCImpl activityCImpl,
+        FragmentCImpl fragmentCImpl, View viewParam) {
+      this.singletonCImpl = singletonCImpl;
+      this.activityRetainedCImpl = activityRetainedCImpl;
+      this.activityCImpl = activityCImpl;
+      this.fragmentCImpl = fragmentCImpl;
+
+
+    }
+  }
+
+  private static final class FragmentCImpl extends TgpApplication_HiltComponents.FragmentC {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ActivityRetainedCImpl activityRetainedCImpl;
+
+    private final ActivityCImpl activityCImpl;
+
+    private final FragmentCImpl fragmentCImpl = this;
+
+    FragmentCImpl(SingletonCImpl singletonCImpl, ActivityRetainedCImpl activityRetainedCImpl,
+        ActivityCImpl activityCImpl, Fragment fragmentParam) {
+      this.singletonCImpl = singletonCImpl;
+      this.activityRetainedCImpl = activityRetainedCImpl;
+      this.activityCImpl = activityCImpl;
+
+
+    }
+
+    @Override
+    public DefaultViewModelFactories.InternalFactoryFactory getHiltInternalFactoryFactory() {
+      return activityCImpl.getHiltInternalFactoryFactory();
+    }
+
+    @Override
+    public ViewWithFragmentComponentBuilder viewWithFragmentComponentBuilder() {
+      return new ViewWithFragmentCBuilder(singletonCImpl, activityRetainedCImpl, activityCImpl, fragmentCImpl);
+    }
+  }
+
+  private static final class ViewCImpl extends TgpApplication_HiltComponents.ViewC {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ActivityRetainedCImpl activityRetainedCImpl;
+
+    private final ActivityCImpl activityCImpl;
+
+    private final ViewCImpl viewCImpl = this;
+
+    ViewCImpl(SingletonCImpl singletonCImpl, ActivityRetainedCImpl activityRetainedCImpl,
+        ActivityCImpl activityCImpl, View viewParam) {
+      this.singletonCImpl = singletonCImpl;
+      this.activityRetainedCImpl = activityRetainedCImpl;
+      this.activityCImpl = activityCImpl;
+
+
+    }
+  }
+
+  private static final class ActivityCImpl extends TgpApplication_HiltComponents.ActivityC {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ActivityRetainedCImpl activityRetainedCImpl;
+
+    private final ActivityCImpl activityCImpl = this;
+
+    ActivityCImpl(SingletonCImpl singletonCImpl, ActivityRetainedCImpl activityRetainedCImpl,
+        Activity activityParam) {
+      this.singletonCImpl = singletonCImpl;
+      this.activityRetainedCImpl = activityRetainedCImpl;
+
+
+    }
+
+    Map keySetMapOfClassOfObjectAndBooleanBuilder() {
+      MapBuilder mapBuilder = MapBuilder.<String, Boolean>newMapBuilder(7);
+      mapBuilder.put(AuthViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, AuthViewModel_HiltModules.KeyModule.provide());
+      mapBuilder.put(BootstrapViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, BootstrapViewModel_HiltModules.KeyModule.provide());
+      mapBuilder.put(CatalogViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, CatalogViewModel_HiltModules.KeyModule.provide());
+      mapBuilder.put(CurrentAffairsViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, CurrentAffairsViewModel_HiltModules.KeyModule.provide());
+      mapBuilder.put(ExamViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, ExamViewModel_HiltModules.KeyModule.provide());
+      mapBuilder.put(HomeViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, HomeViewModel_HiltModules.KeyModule.provide());
+      mapBuilder.put(OnboardingViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, OnboardingViewModel_HiltModules.KeyModule.provide());
+      return mapBuilder.build();
+    }
+
+    @Override
+    public void injectMainActivity(MainActivity arg0) {
+      injectMainActivity2(arg0);
+    }
+
+    @Override
+    public DefaultViewModelFactories.InternalFactoryFactory getHiltInternalFactoryFactory() {
+      return DefaultViewModelFactories_InternalFactoryFactory_Factory.newInstance(getViewModelKeys(), new ViewModelCBuilder(singletonCImpl, activityRetainedCImpl));
+    }
+
+    @Override
+    public Map<Class<?>, Boolean> getViewModelKeys() {
+      return LazyClassKeyMap.<Boolean>of(keySetMapOfClassOfObjectAndBooleanBuilder());
+    }
+
+    @Override
+    public ViewModelComponentBuilder getViewModelComponentBuilder() {
+      return new ViewModelCBuilder(singletonCImpl, activityRetainedCImpl);
+    }
+
+    @Override
+    public FragmentComponentBuilder fragmentComponentBuilder() {
+      return new FragmentCBuilder(singletonCImpl, activityRetainedCImpl, activityCImpl);
+    }
+
+    @Override
+    public ViewComponentBuilder viewComponentBuilder() {
+      return new ViewCBuilder(singletonCImpl, activityRetainedCImpl, activityCImpl);
+    }
+
+    private MainActivity injectMainActivity2(MainActivity instance) {
+      MainActivity_MembersInjector.injectAuthRepository(instance, singletonCImpl.appwriteAuthRepositoryProvider.get());
+      return instance;
+    }
+  }
+
+  private static final class ViewModelCImpl extends TgpApplication_HiltComponents.ViewModelC {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ActivityRetainedCImpl activityRetainedCImpl;
+
+    private final ViewModelCImpl viewModelCImpl = this;
+
+    Provider<AuthViewModel> authViewModelProvider;
+
+    Provider<BootstrapViewModel> bootstrapViewModelProvider;
+
+    Provider<CatalogViewModel> catalogViewModelProvider;
+
+    Provider<CurrentAffairsViewModel> currentAffairsViewModelProvider;
+
+    Provider<HomeViewModel> homeViewModelProvider;
+
+    Provider<OnboardingViewModel> onboardingViewModelProvider;
+
+    Provider<ExamViewModel.Factory> factoryProvider;
+
+    ViewModelCImpl(SingletonCImpl singletonCImpl, ActivityRetainedCImpl activityRetainedCImpl,
+        SavedStateHandle savedStateHandleParam, ViewModelLifecycle viewModelLifecycleParam) {
+      this.singletonCImpl = singletonCImpl;
+      this.activityRetainedCImpl = activityRetainedCImpl;
+
+      initialize(savedStateHandleParam, viewModelLifecycleParam);
+
+    }
+
+    Map hiltViewModelMapMapOfClassOfObjectAndProviderOfViewModelBuilder() {
+      MapBuilder mapBuilder = MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(6);
+      mapBuilder.put(AuthViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (authViewModelProvider)));
+      mapBuilder.put(BootstrapViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (bootstrapViewModelProvider)));
+      mapBuilder.put(CatalogViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (catalogViewModelProvider)));
+      mapBuilder.put(CurrentAffairsViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (currentAffairsViewModelProvider)));
+      mapBuilder.put(HomeViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (homeViewModelProvider)));
+      mapBuilder.put(OnboardingViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (onboardingViewModelProvider)));
+      return mapBuilder.build();
+    }
+
+    ObserveExamRunUseCase observeExamRunUseCase() {
+      return new ObserveExamRunUseCase(singletonCImpl.cachedPaperRepositoryProvider.get(), singletonCImpl.bindExamSessionRepositoryProvider.get());
+    }
+
+    StartExamUseCase startExamUseCase() {
+      return new StartExamUseCase(singletonCImpl.cachedPaperRepositoryProvider.get(), singletonCImpl.bindExamSessionRepositoryProvider.get());
+    }
+
+    SaveAnswerUseCase saveAnswerUseCase() {
+      return new SaveAnswerUseCase(singletonCImpl.bindExamSessionRepositoryProvider.get());
+    }
+
+    SetCurrentQuestionUseCase setCurrentQuestionUseCase() {
+      return new SetCurrentQuestionUseCase(singletonCImpl.bindExamSessionRepositoryProvider.get());
+    }
+
+    SubmitExamUseCase submitExamUseCase() {
+      return new SubmitExamUseCase(singletonCImpl.bindExamSessionRepositoryProvider.get());
+    }
+
+    ResetExamUseCase resetExamUseCase() {
+      return new ResetExamUseCase(singletonCImpl.bindExamSessionRepositoryProvider.get());
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initialize(final SavedStateHandle savedStateHandleParam,
+        final ViewModelLifecycle viewModelLifecycleParam) {
+      this.authViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
+      this.bootstrapViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
+      this.catalogViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
+      this.currentAffairsViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
+      this.homeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 4);
+      this.onboardingViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 5);
+      this.factoryProvider = SingleCheck.provider(new SwitchingProvider<ExamViewModel.Factory>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 6));
+    }
+
+    @Override
+    public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(hiltViewModelMapMapOfClassOfObjectAndProviderOfViewModelBuilder());
+    }
+
+    @Override
+    public Map<Class<?>, Object> getHiltViewModelAssistedMap() {
+      return LazyClassKeyMap.<Object>of(Collections.<String, Object>singletonMap(ExamViewModel_HiltModules_BindsModule_Bind_LazyMapKey.lazyClassKeyName, factoryProvider.get()));
+    }
+
+    private static final class SwitchingProvider<T> implements Provider<T> {
+      private final SingletonCImpl singletonCImpl;
+
+      private final ActivityRetainedCImpl activityRetainedCImpl;
+
+      private final ViewModelCImpl viewModelCImpl;
+
+      private final int id;
+
+      SwitchingProvider(SingletonCImpl singletonCImpl, ActivityRetainedCImpl activityRetainedCImpl,
+          ViewModelCImpl viewModelCImpl, int id) {
+        this.singletonCImpl = singletonCImpl;
+        this.activityRetainedCImpl = activityRetainedCImpl;
+        this.viewModelCImpl = viewModelCImpl;
+        this.id = id;
+      }
+
+      @Override
+      @SuppressWarnings("unchecked")
+      public T get() {
+        switch (id) {
+          case 0: // com.tgp.mockexam.feature.auth.AuthViewModel
+          return (T) new AuthViewModel(singletonCImpl.appwriteAuthRepositoryProvider.get(), singletonCImpl.defaultUserPreferencesRepositoryProvider.get());
+
+          case 1: // com.tgp.mockexam.bootstrap.BootstrapViewModel
+          return (T) new BootstrapViewModel(singletonCImpl.defaultUserPreferencesRepositoryProvider.get());
+
+          case 2: // com.tgp.mockexam.feature.catalog.CatalogViewModel
+          return (T) new CatalogViewModel(singletonCImpl.cachedPaperRepositoryProvider.get());
+
+          case 3: // com.tgp.mockexam.feature.currentaffairs.CurrentAffairsViewModel
+          return (T) new CurrentAffairsViewModel(singletonCImpl.bindCurrentAffairsRepositoryProvider.get());
+
+          case 4: // com.tgp.mockexam.feature.home.HomeViewModel
+          return (T) new HomeViewModel(singletonCImpl.cachedPaperRepositoryProvider.get());
+
+          case 5: // com.tgp.mockexam.feature.auth.OnboardingViewModel
+          return (T) new OnboardingViewModel(singletonCImpl.defaultUserPreferencesRepositoryProvider.get());
+
+          case 6: // com.tgp.mockexam.feature.exam.ExamViewModel.Factory
+          return (T) new ExamViewModel.Factory() {
+            @Override
+            public ExamViewModel create(String paperId) {
+              return new ExamViewModel(paperId, viewModelCImpl.observeExamRunUseCase(), viewModelCImpl.startExamUseCase(), viewModelCImpl.saveAnswerUseCase(), viewModelCImpl.setCurrentQuestionUseCase(), viewModelCImpl.submitExamUseCase(), viewModelCImpl.resetExamUseCase());
+            }
+          };
+
+          default: throw new AssertionError(id);
+        }
+      }
+    }
+  }
+
+  private static final class ActivityRetainedCImpl extends TgpApplication_HiltComponents.ActivityRetainedC {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ActivityRetainedCImpl activityRetainedCImpl = this;
+
+    Provider<ActivityRetainedLifecycle> provideActivityRetainedLifecycleProvider;
+
+    ActivityRetainedCImpl(SingletonCImpl singletonCImpl,
+        SavedStateHandleHolder savedStateHandleHolderParam) {
+      this.singletonCImpl = singletonCImpl;
+
+      initialize(savedStateHandleHolderParam);
+
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initialize(final SavedStateHandleHolder savedStateHandleHolderParam) {
+      this.provideActivityRetainedLifecycleProvider = DoubleCheck.provider(new SwitchingProvider<ActivityRetainedLifecycle>(singletonCImpl, activityRetainedCImpl, 0));
+    }
+
+    @Override
+    public ActivityComponentBuilder activityComponentBuilder() {
+      return new ActivityCBuilder(singletonCImpl, activityRetainedCImpl);
+    }
+
+    @Override
+    public ActivityRetainedLifecycle getActivityRetainedLifecycle() {
+      return provideActivityRetainedLifecycleProvider.get();
+    }
+
+    private static final class SwitchingProvider<T> implements Provider<T> {
+      private final SingletonCImpl singletonCImpl;
+
+      private final ActivityRetainedCImpl activityRetainedCImpl;
+
+      private final int id;
+
+      SwitchingProvider(SingletonCImpl singletonCImpl, ActivityRetainedCImpl activityRetainedCImpl,
+          int id) {
+        this.singletonCImpl = singletonCImpl;
+        this.activityRetainedCImpl = activityRetainedCImpl;
+        this.id = id;
+      }
+
+      @Override
+      @SuppressWarnings("unchecked")
+      public T get() {
+        switch (id) {
+          case 0: // dagger.hilt.android.ActivityRetainedLifecycle
+          return (T) ActivityRetainedComponentManager_LifecycleModule_ProvideActivityRetainedLifecycleFactory.provideActivityRetainedLifecycle();
+
+          default: throw new AssertionError(id);
+        }
+      }
+    }
+  }
+
+  private static final class ServiceCImpl extends TgpApplication_HiltComponents.ServiceC {
+    private final SingletonCImpl singletonCImpl;
+
+    private final ServiceCImpl serviceCImpl = this;
+
+    ServiceCImpl(SingletonCImpl singletonCImpl, Service serviceParam) {
+      this.singletonCImpl = singletonCImpl;
+
+
+    }
+  }
+
+  private static final class SingletonCImpl extends TgpApplication_HiltComponents.SingletonC {
+    private final ApplicationContextModule applicationContextModule;
+
+    private final SingletonCImpl singletonCImpl = this;
+
+    Provider<AppwriteConfig> provideAppwriteConfigProvider;
+
+    Provider<TablesClient> provideTablesClientProvider;
+
+    Provider<TgpDatabase> provideTgpDatabaseProvider;
+
+    Provider<DispatcherProvider> provideDispatcherProvider;
+
+    Provider<AppwriteContentSyncer> appwriteContentSyncerProvider;
+
+    Provider<AccountClient> provideAccountClientProvider;
+
+    Provider<DataStore<Preferences>> provideDataStoreProvider;
+
+    Provider<DefaultSessionRepository> defaultSessionRepositoryProvider;
+
+    Provider<AppwriteAuthRepository> appwriteAuthRepositoryProvider;
+
+    Provider<DefaultUserPreferencesRepository> defaultUserPreferencesRepositoryProvider;
+
+    Provider<AssetPaperRepository> assetPaperRepositoryProvider;
+
+    Provider<CachedPaperRepository> cachedPaperRepositoryProvider;
+
+    Provider<CurrentAffairsRepositoryImpl> currentAffairsRepositoryImplProvider;
+
+    Provider<CurrentAffairsRepository> bindCurrentAffairsRepositoryProvider;
+
+    Provider<RoomExamSessionRepository> roomExamSessionRepositoryProvider;
+
+    Provider<ExamSessionRepository> bindExamSessionRepositoryProvider;
+
+    SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
+      this.applicationContextModule = applicationContextModuleParam;
+      initialize(applicationContextModuleParam);
+
+    }
+
+    ContentDao contentDao() {
+      return DatabaseModule_ProvideContentDaoFactory.provideContentDao(provideTgpDatabaseProvider.get());
+    }
+
+    ExamSessionDao examSessionDao() {
+      return DatabaseModule_ProvideExamSessionDaoFactory.provideExamSessionDao(provideTgpDatabaseProvider.get());
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initialize(final ApplicationContextModule applicationContextModuleParam) {
+      this.provideAppwriteConfigProvider = DoubleCheck.provider(new SwitchingProvider<AppwriteConfig>(singletonCImpl, 2));
+      this.provideTablesClientProvider = DoubleCheck.provider(new SwitchingProvider<TablesClient>(singletonCImpl, 1));
+      this.provideTgpDatabaseProvider = DoubleCheck.provider(new SwitchingProvider<TgpDatabase>(singletonCImpl, 3));
+      this.provideDispatcherProvider = DoubleCheck.provider(new SwitchingProvider<DispatcherProvider>(singletonCImpl, 4));
+      this.appwriteContentSyncerProvider = DoubleCheck.provider(new SwitchingProvider<AppwriteContentSyncer>(singletonCImpl, 0));
+      this.provideAccountClientProvider = DoubleCheck.provider(new SwitchingProvider<AccountClient>(singletonCImpl, 6));
+      this.provideDataStoreProvider = DoubleCheck.provider(new SwitchingProvider<DataStore<Preferences>>(singletonCImpl, 8));
+      this.defaultSessionRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<DefaultSessionRepository>(singletonCImpl, 7));
+      this.appwriteAuthRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AppwriteAuthRepository>(singletonCImpl, 5));
+      this.defaultUserPreferencesRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<DefaultUserPreferencesRepository>(singletonCImpl, 9));
+      this.assetPaperRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AssetPaperRepository>(singletonCImpl, 11));
+      this.cachedPaperRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<CachedPaperRepository>(singletonCImpl, 10));
+      this.currentAffairsRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 12);
+      this.bindCurrentAffairsRepositoryProvider = DoubleCheck.provider((Provider) (currentAffairsRepositoryImplProvider));
+      this.roomExamSessionRepositoryProvider = new SwitchingProvider<>(singletonCImpl, 13);
+      this.bindExamSessionRepositoryProvider = DoubleCheck.provider((Provider) (roomExamSessionRepositoryProvider));
+    }
+
+    @Override
+    public void injectTgpApplication(TgpApplication tgpApplication) {
+      injectTgpApplication2(tgpApplication);
+    }
+
+    @Override
+    public Set<Boolean> getDisableFragmentGetContextFix() {
+      return Collections.<Boolean>emptySet();
+    }
+
+    @Override
+    public ActivityRetainedComponentBuilder retainedComponentBuilder() {
+      return new ActivityRetainedCBuilder(singletonCImpl);
+    }
+
+    @Override
+    public ServiceComponentBuilder serviceComponentBuilder() {
+      return new ServiceCBuilder(singletonCImpl);
+    }
+
+    private TgpApplication injectTgpApplication2(TgpApplication instance) {
+      TgpApplication_MembersInjector.injectSyncer(instance, appwriteContentSyncerProvider.get());
+      return instance;
+    }
+
+    private static final class SwitchingProvider<T> implements Provider<T> {
+      private final SingletonCImpl singletonCImpl;
+
+      private final int id;
+
+      SwitchingProvider(SingletonCImpl singletonCImpl, int id) {
+        this.singletonCImpl = singletonCImpl;
+        this.id = id;
+      }
+
+      @Override
+      @SuppressWarnings("unchecked")
+      public T get() {
+        switch (id) {
+          case 0: // com.tgp.mockexam.core.data.sync.AppwriteContentSyncer
+          return (T) new AppwriteContentSyncer(singletonCImpl.provideTablesClientProvider.get(), singletonCImpl.contentDao(), singletonCImpl.provideDispatcherProvider.get());
+
+          case 1: // com.tgp.mockexam.core.network.TablesClient
+          return (T) DataModule_Companion_ProvideTablesClientFactory.provideTablesClient(singletonCImpl.provideAppwriteConfigProvider.get());
+
+          case 2: // com.tgp.mockexam.core.network.AppwriteConfig
+          return (T) DataModule_Companion_ProvideAppwriteConfigFactory.provideAppwriteConfig();
+
+          case 3: // com.tgp.mockexam.core.database.TgpDatabase
+          return (T) DatabaseModule_ProvideTgpDatabaseFactory.provideTgpDatabase(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
+
+          case 4: // com.tgp.mockexam.core.common.DispatcherProvider
+          return (T) DispatcherModule_ProvideDispatcherProviderFactory.provideDispatcherProvider();
+
+          case 5: // com.tgp.mockexam.core.data.auth.AppwriteAuthRepository
+          return (T) new AppwriteAuthRepository(singletonCImpl.provideAccountClientProvider.get(), singletonCImpl.defaultSessionRepositoryProvider.get());
+
+          case 6: // com.tgp.mockexam.core.network.AccountClient
+          return (T) DataModule_Companion_ProvideAccountClientFactory.provideAccountClient(singletonCImpl.provideAppwriteConfigProvider.get());
+
+          case 7: // com.tgp.mockexam.core.datastore.DefaultSessionRepository
+          return (T) new DefaultSessionRepository(singletonCImpl.provideDataStoreProvider.get());
+
+          case 8: // androidx.datastore.core.DataStore<androidx.datastore.preferences.core.Preferences>
+          return (T) DatastoreModule_ProvideDataStoreFactory.provideDataStore(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
+
+          case 9: // com.tgp.mockexam.core.datastore.DefaultUserPreferencesRepository
+          return (T) new DefaultUserPreferencesRepository(singletonCImpl.provideDataStoreProvider.get());
+
+          case 10: // com.tgp.mockexam.core.data.repository.CachedPaperRepository
+          return (T) new CachedPaperRepository(singletonCImpl.assetPaperRepositoryProvider.get(), singletonCImpl.contentDao(), singletonCImpl.appwriteContentSyncerProvider.get(), singletonCImpl.provideDispatcherProvider.get());
+
+          case 11: // com.tgp.mockexam.core.data.repository.AssetPaperRepository
+          return (T) new AssetPaperRepository(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule), singletonCImpl.provideDispatcherProvider.get());
+
+          case 12: // com.tgp.mockexam.core.data.repository.CurrentAffairsRepositoryImpl
+          return (T) new CurrentAffairsRepositoryImpl(singletonCImpl.provideTablesClientProvider.get());
+
+          case 13: // com.tgp.mockexam.core.data.repository.RoomExamSessionRepository
+          return (T) new RoomExamSessionRepository(singletonCImpl.examSessionDao());
+
+          default: throw new AssertionError(id);
+        }
+      }
+    }
+  }
+}

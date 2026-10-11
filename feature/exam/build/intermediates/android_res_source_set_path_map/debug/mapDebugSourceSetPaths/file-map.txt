@@ -1,0 +1,9 @@
+com.tgp.mockexam.feature.exam-pngs-0 /home/kali/TGP-APP/feature/exam/build/generated/res/pngs/debug
+com.tgp.mockexam.feature.exam-updated_navigation_xml-1 /home/kali/TGP-APP/feature/exam/build/generated/updated_navigation_xml/debug
+com.tgp.mockexam.feature.exam-mergeDebugResources-2 /home/kali/TGP-APP/feature/exam/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.tgp.mockexam.feature.exam-mergeDebugResources-3 /home/kali/TGP-APP/feature/exam/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.tgp.mockexam.feature.exam-debug-4 /home/kali/TGP-APP/feature/exam/build/intermediates/merged_res/debug/mergeDebugResources
+com.tgp.mockexam.feature.exam-debug-5 /home/kali/TGP-APP/feature/exam/build/intermediates/packaged_res/debug/packageDebugResources
+com.tgp.mockexam.feature.exam-debug-6 /home/kali/TGP-APP/feature/exam/src/debug/res
+com.tgp.mockexam.feature.exam-main-7 /home/kali/TGP-APP/feature/exam/src/main/res
+gradleHome-0 /root/.gradle

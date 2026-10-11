@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#1B3A6B</color>
+    <color name="tgp_brand_navy">#1B3A6B</color>
+    <string name="app_name">TGP Mock Exam</string>
+    <style name="Theme.TGP" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+    <style name="Theme.TGP.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/tgp_brand_navy</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.TGP</item>
+    </style>
+</resources>
