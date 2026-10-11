@@ -6,6 +6,7 @@ import com.tgp.mockexam.core.data.di.DataModule;
 import com.tgp.mockexam.core.database.di.DatabaseModule;
 import com.tgp.mockexam.core.datastore.di.DatastoreBindingsModule;
 import com.tgp.mockexam.core.datastore.di.DatastoreModule;
+import com.tgp.mockexam.feature.admin.AdminViewModel_HiltModules;
 import com.tgp.mockexam.feature.auth.AuthViewModel_HiltModules;
 import com.tgp.mockexam.feature.auth.OnboardingViewModel_HiltModules;
 import com.tgp.mockexam.feature.catalog.CatalogViewModel_HiltModules;
@@ -168,6 +169,7 @@ public final class TgpApplication_HiltComponents {
 
   @Subcomponent(
       modules = {
+          AdminViewModel_HiltModules.KeyModule.class,
           AuthViewModel_HiltModules.KeyModule.class,
           BootstrapViewModel_HiltModules.KeyModule.class,
           CatalogViewModel_HiltModules.KeyModule.class,
@@ -214,6 +216,7 @@ public final class TgpApplication_HiltComponents {
 
   @Subcomponent(
       modules = {
+          AdminViewModel_HiltModules.BindsModule.class,
           AuthViewModel_HiltModules.BindsModule.class,
           BootstrapViewModel_HiltModules.BindsModule.class,
           CatalogViewModel_HiltModules.BindsModule.class,

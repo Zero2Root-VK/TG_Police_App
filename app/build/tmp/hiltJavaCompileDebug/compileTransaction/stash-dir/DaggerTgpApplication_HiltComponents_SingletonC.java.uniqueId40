@@ -21,6 +21,7 @@ import com.tgp.mockexam.core.data.di.DataModule_Companion_ProvideTablesClientFac
 import com.tgp.mockexam.core.data.repository.AssetPaperRepository;
 import com.tgp.mockexam.core.data.repository.CachedPaperRepository;
 import com.tgp.mockexam.core.data.repository.CurrentAffairsRepositoryImpl;
+import com.tgp.mockexam.core.data.repository.ProfileRepositoryImpl;
 import com.tgp.mockexam.core.data.repository.RoomExamSessionRepository;
 import com.tgp.mockexam.core.data.sync.AppwriteContentSyncer;
 import com.tgp.mockexam.core.database.TgpDatabase;
@@ -34,6 +35,7 @@ import com.tgp.mockexam.core.datastore.DefaultUserPreferencesRepository;
 import com.tgp.mockexam.core.datastore.di.DatastoreModule_ProvideDataStoreFactory;
 import com.tgp.mockexam.core.domain.repository.CurrentAffairsRepository;
 import com.tgp.mockexam.core.domain.repository.ExamSessionRepository;
+import com.tgp.mockexam.core.domain.repository.ProfileRepository;
 import com.tgp.mockexam.core.domain.usecase.ObserveExamRunUseCase;
 import com.tgp.mockexam.core.domain.usecase.ResetExamUseCase;
 import com.tgp.mockexam.core.domain.usecase.SaveAnswerUseCase;
@@ -43,6 +45,10 @@ import com.tgp.mockexam.core.domain.usecase.SubmitExamUseCase;
 import com.tgp.mockexam.core.network.AccountClient;
 import com.tgp.mockexam.core.network.AppwriteConfig;
 import com.tgp.mockexam.core.network.TablesClient;
+import com.tgp.mockexam.feature.admin.AdminViewModel;
+import com.tgp.mockexam.feature.admin.AdminViewModel_HiltModules;
+import com.tgp.mockexam.feature.admin.AdminViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
+import com.tgp.mockexam.feature.admin.AdminViewModel_HiltModules_KeyModule_Provide_LazyMapKey;
 import com.tgp.mockexam.feature.auth.AuthViewModel;
 import com.tgp.mockexam.feature.auth.AuthViewModel_HiltModules;
 import com.tgp.mockexam.feature.auth.AuthViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
@@ -417,7 +423,8 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
     }
 
     Map keySetMapOfClassOfObjectAndBooleanBuilder() {
-      MapBuilder mapBuilder = MapBuilder.<String, Boolean>newMapBuilder(7);
+      MapBuilder mapBuilder = MapBuilder.<String, Boolean>newMapBuilder(8);
+      mapBuilder.put(AdminViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, AdminViewModel_HiltModules.KeyModule.provide());
       mapBuilder.put(AuthViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, AuthViewModel_HiltModules.KeyModule.provide());
       mapBuilder.put(BootstrapViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, BootstrapViewModel_HiltModules.KeyModule.provide());
       mapBuilder.put(CatalogViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, CatalogViewModel_HiltModules.KeyModule.provide());
@@ -471,6 +478,8 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
 
     private final ViewModelCImpl viewModelCImpl = this;
 
+    Provider<AdminViewModel> adminViewModelProvider;
+
     Provider<AuthViewModel> authViewModelProvider;
 
     Provider<BootstrapViewModel> bootstrapViewModelProvider;
@@ -495,7 +504,8 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
     }
 
     Map hiltViewModelMapMapOfClassOfObjectAndProviderOfViewModelBuilder() {
-      MapBuilder mapBuilder = MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(6);
+      MapBuilder mapBuilder = MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(7);
+      mapBuilder.put(AdminViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (adminViewModelProvider)));
       mapBuilder.put(AuthViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (authViewModelProvider)));
       mapBuilder.put(BootstrapViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (bootstrapViewModelProvider)));
       mapBuilder.put(CatalogViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (catalogViewModelProvider)));
@@ -532,13 +542,14 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
     @SuppressWarnings("unchecked")
     private void initialize(final SavedStateHandle savedStateHandleParam,
         final ViewModelLifecycle viewModelLifecycleParam) {
-      this.authViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
-      this.bootstrapViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
-      this.catalogViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
-      this.currentAffairsViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
-      this.homeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 4);
-      this.onboardingViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 5);
-      this.factoryProvider = SingleCheck.provider(new SwitchingProvider<ExamViewModel.Factory>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 6));
+      this.adminViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
+      this.authViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
+      this.bootstrapViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
+      this.catalogViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
+      this.currentAffairsViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 4);
+      this.homeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 5);
+      this.onboardingViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 6);
+      this.factoryProvider = SingleCheck.provider(new SwitchingProvider<ExamViewModel.Factory>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 7));
     }
 
     @Override
@@ -572,25 +583,28 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
       @SuppressWarnings("unchecked")
       public T get() {
         switch (id) {
-          case 0: // com.tgp.mockexam.feature.auth.AuthViewModel
-          return (T) new AuthViewModel(singletonCImpl.appwriteAuthRepositoryProvider.get(), singletonCImpl.defaultUserPreferencesRepositoryProvider.get());
+          case 0: // com.tgp.mockexam.feature.admin.AdminViewModel
+          return (T) new AdminViewModel(singletonCImpl.cachedPaperRepositoryProvider.get());
 
-          case 1: // com.tgp.mockexam.bootstrap.BootstrapViewModel
+          case 1: // com.tgp.mockexam.feature.auth.AuthViewModel
+          return (T) new AuthViewModel(singletonCImpl.appwriteAuthRepositoryProvider.get(), singletonCImpl.bindProfileRepositoryProvider.get(), singletonCImpl.defaultUserPreferencesRepositoryProvider.get());
+
+          case 2: // com.tgp.mockexam.bootstrap.BootstrapViewModel
           return (T) new BootstrapViewModel(singletonCImpl.defaultUserPreferencesRepositoryProvider.get());
 
-          case 2: // com.tgp.mockexam.feature.catalog.CatalogViewModel
+          case 3: // com.tgp.mockexam.feature.catalog.CatalogViewModel
           return (T) new CatalogViewModel(singletonCImpl.cachedPaperRepositoryProvider.get());
 
-          case 3: // com.tgp.mockexam.feature.currentaffairs.CurrentAffairsViewModel
+          case 4: // com.tgp.mockexam.feature.currentaffairs.CurrentAffairsViewModel
           return (T) new CurrentAffairsViewModel(singletonCImpl.bindCurrentAffairsRepositoryProvider.get());
 
-          case 4: // com.tgp.mockexam.feature.home.HomeViewModel
+          case 5: // com.tgp.mockexam.feature.home.HomeViewModel
           return (T) new HomeViewModel(singletonCImpl.cachedPaperRepositoryProvider.get());
 
-          case 5: // com.tgp.mockexam.feature.auth.OnboardingViewModel
+          case 6: // com.tgp.mockexam.feature.auth.OnboardingViewModel
           return (T) new OnboardingViewModel(singletonCImpl.defaultUserPreferencesRepositoryProvider.get());
 
-          case 6: // com.tgp.mockexam.feature.exam.ExamViewModel.Factory
+          case 7: // com.tgp.mockexam.feature.exam.ExamViewModel.Factory
           return (T) new ExamViewModel.Factory() {
             @Override
             public ExamViewModel create(String paperId) {
@@ -696,11 +710,15 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
 
     Provider<AppwriteAuthRepository> appwriteAuthRepositoryProvider;
 
-    Provider<DefaultUserPreferencesRepository> defaultUserPreferencesRepositoryProvider;
-
     Provider<AssetPaperRepository> assetPaperRepositoryProvider;
 
     Provider<CachedPaperRepository> cachedPaperRepositoryProvider;
+
+    Provider<ProfileRepositoryImpl> profileRepositoryImplProvider;
+
+    Provider<ProfileRepository> bindProfileRepositoryProvider;
+
+    Provider<DefaultUserPreferencesRepository> defaultUserPreferencesRepositoryProvider;
 
     Provider<CurrentAffairsRepositoryImpl> currentAffairsRepositoryImplProvider;
 
@@ -735,12 +753,14 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
       this.provideDataStoreProvider = DoubleCheck.provider(new SwitchingProvider<DataStore<Preferences>>(singletonCImpl, 8));
       this.defaultSessionRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<DefaultSessionRepository>(singletonCImpl, 7));
       this.appwriteAuthRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AppwriteAuthRepository>(singletonCImpl, 5));
-      this.defaultUserPreferencesRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<DefaultUserPreferencesRepository>(singletonCImpl, 9));
-      this.assetPaperRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AssetPaperRepository>(singletonCImpl, 11));
-      this.cachedPaperRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<CachedPaperRepository>(singletonCImpl, 10));
-      this.currentAffairsRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 12);
+      this.assetPaperRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AssetPaperRepository>(singletonCImpl, 10));
+      this.cachedPaperRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<CachedPaperRepository>(singletonCImpl, 9));
+      this.profileRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 11);
+      this.bindProfileRepositoryProvider = DoubleCheck.provider((Provider) (profileRepositoryImplProvider));
+      this.defaultUserPreferencesRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<DefaultUserPreferencesRepository>(singletonCImpl, 12));
+      this.currentAffairsRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 13);
       this.bindCurrentAffairsRepositoryProvider = DoubleCheck.provider((Provider) (currentAffairsRepositoryImplProvider));
-      this.roomExamSessionRepositoryProvider = new SwitchingProvider<>(singletonCImpl, 13);
+      this.roomExamSessionRepositoryProvider = new SwitchingProvider<>(singletonCImpl, 14);
       this.bindExamSessionRepositoryProvider = DoubleCheck.provider((Provider) (roomExamSessionRepositoryProvider));
     }
 
@@ -810,19 +830,22 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
           case 8: // androidx.datastore.core.DataStore<androidx.datastore.preferences.core.Preferences>
           return (T) DatastoreModule_ProvideDataStoreFactory.provideDataStore(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
 
-          case 9: // com.tgp.mockexam.core.datastore.DefaultUserPreferencesRepository
-          return (T) new DefaultUserPreferencesRepository(singletonCImpl.provideDataStoreProvider.get());
-
-          case 10: // com.tgp.mockexam.core.data.repository.CachedPaperRepository
+          case 9: // com.tgp.mockexam.core.data.repository.CachedPaperRepository
           return (T) new CachedPaperRepository(singletonCImpl.assetPaperRepositoryProvider.get(), singletonCImpl.contentDao(), singletonCImpl.appwriteContentSyncerProvider.get(), singletonCImpl.provideDispatcherProvider.get());
 
-          case 11: // com.tgp.mockexam.core.data.repository.AssetPaperRepository
+          case 10: // com.tgp.mockexam.core.data.repository.AssetPaperRepository
           return (T) new AssetPaperRepository(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule), singletonCImpl.provideDispatcherProvider.get());
 
-          case 12: // com.tgp.mockexam.core.data.repository.CurrentAffairsRepositoryImpl
+          case 11: // com.tgp.mockexam.core.data.repository.ProfileRepositoryImpl
+          return (T) new ProfileRepositoryImpl(singletonCImpl.provideTablesClientProvider.get());
+
+          case 12: // com.tgp.mockexam.core.datastore.DefaultUserPreferencesRepository
+          return (T) new DefaultUserPreferencesRepository(singletonCImpl.provideDataStoreProvider.get());
+
+          case 13: // com.tgp.mockexam.core.data.repository.CurrentAffairsRepositoryImpl
           return (T) new CurrentAffairsRepositoryImpl(singletonCImpl.provideTablesClientProvider.get());
 
-          case 13: // com.tgp.mockexam.core.data.repository.RoomExamSessionRepository
+          case 14: // com.tgp.mockexam.core.data.repository.RoomExamSessionRepository
           return (T) new RoomExamSessionRepository(singletonCImpl.examSessionDao());
 
           default: throw new AssertionError(id);

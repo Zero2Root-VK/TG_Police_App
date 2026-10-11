@@ -70,5 +70,9 @@ abstract class DataModule {
         @Provides
         @Singleton
         fun provideAccountClient(config: AppwriteConfig): AccountClient = HttpAccountClient(config)
+
+        @Provides
+        @Singleton
+        fun provideAdminWriteClient(config: AppwriteConfig): com.tgp.mockexam.core.network.AdminWriteClient = com.tgp.mockexam.core.network.HttpAdminWriteClient(config)
     }
 }

@@ -22,6 +22,7 @@ class DefaultUserPreferencesRepository @Inject constructor(
         val onboardingCompleted = booleanPreferencesKey("onboarding_completed")
         val uiLanguage = stringPreferencesKey("ui_language")
         val selectedTrack = stringPreferencesKey("selected_track")
+        val adminApiKey = stringPreferencesKey("admin_api_key")
     }
 
     override val onboardingCompleted: Flow<Boolean> =
@@ -36,6 +37,10 @@ class DefaultUserPreferencesRepository @Inject constructor(
         prefs[Keys.selectedTrack]?.let { Track.fromId(it) }
     }
 
+    override val adminApiKey: Flow<String> = dataStore.data.map { prefs ->
+        prefs[Keys.adminApiKey] ?: ""
+    }
+
     override suspend fun setOnboardingCompleted(completed: Boolean) {
         dataStore.edit { it[Keys.onboardingCompleted] = completed }
     }
@@ -47,6 +52,12 @@ class DefaultUserPreferencesRepository @Inject constructor(
     override suspend fun setSelectedTrack(track: Track?) {
         dataStore.edit { prefs ->
             if (track == null) prefs.remove(Keys.selectedTrack) else prefs[Keys.selectedTrack] = track.id
+        }
+    }
+
+    override suspend fun setAdminApiKey(key: String) {
+        dataStore.edit { prefs ->
+            prefs[Keys.adminApiKey] = key
         }
     }
 }

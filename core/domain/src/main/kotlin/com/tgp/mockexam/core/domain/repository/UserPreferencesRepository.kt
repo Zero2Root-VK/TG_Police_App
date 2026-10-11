@@ -9,8 +9,10 @@ interface UserPreferencesRepository {
     val onboardingCompleted: Flow<Boolean>
     val uiLanguage: Flow<ContentLanguage>
     val selectedTrack: Flow<Track?>
+    val adminApiKey: Flow<String>
 
     suspend fun setOnboardingCompleted(completed: Boolean)
     suspend fun setUiLanguage(language: ContentLanguage)
     suspend fun setSelectedTrack(track: Track?)
+    suspend fun setAdminApiKey(key: String)
 }

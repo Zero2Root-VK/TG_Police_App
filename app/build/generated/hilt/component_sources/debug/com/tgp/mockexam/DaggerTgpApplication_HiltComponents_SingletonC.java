@@ -16,6 +16,7 @@ import com.tgp.mockexam.core.common.DispatcherProvider;
 import com.tgp.mockexam.core.common.di.DispatcherModule_ProvideDispatcherProviderFactory;
 import com.tgp.mockexam.core.data.auth.AppwriteAuthRepository;
 import com.tgp.mockexam.core.data.di.DataModule_Companion_ProvideAccountClientFactory;
+import com.tgp.mockexam.core.data.di.DataModule_Companion_ProvideAdminWriteClientFactory;
 import com.tgp.mockexam.core.data.di.DataModule_Companion_ProvideAppwriteConfigFactory;
 import com.tgp.mockexam.core.data.di.DataModule_Companion_ProvideTablesClientFactory;
 import com.tgp.mockexam.core.data.repository.AssetPaperRepository;
@@ -43,6 +44,7 @@ import com.tgp.mockexam.core.domain.usecase.SetCurrentQuestionUseCase;
 import com.tgp.mockexam.core.domain.usecase.StartExamUseCase;
 import com.tgp.mockexam.core.domain.usecase.SubmitExamUseCase;
 import com.tgp.mockexam.core.network.AccountClient;
+import com.tgp.mockexam.core.network.AdminWriteClient;
 import com.tgp.mockexam.core.network.AppwriteConfig;
 import com.tgp.mockexam.core.network.TablesClient;
 import com.tgp.mockexam.feature.admin.AdminViewModel;
@@ -584,7 +586,7 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
       public T get() {
         switch (id) {
           case 0: // com.tgp.mockexam.feature.admin.AdminViewModel
-          return (T) new AdminViewModel(singletonCImpl.cachedPaperRepositoryProvider.get());
+          return (T) new AdminViewModel(singletonCImpl.cachedPaperRepositoryProvider.get(), singletonCImpl.defaultUserPreferencesRepositoryProvider.get(), singletonCImpl.provideAdminWriteClientProvider.get());
 
           case 1: // com.tgp.mockexam.feature.auth.AuthViewModel
           return (T) new AuthViewModel(singletonCImpl.appwriteAuthRepositoryProvider.get(), singletonCImpl.bindProfileRepositoryProvider.get(), singletonCImpl.defaultUserPreferencesRepositoryProvider.get());
@@ -714,11 +716,13 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
 
     Provider<CachedPaperRepository> cachedPaperRepositoryProvider;
 
+    Provider<DefaultUserPreferencesRepository> defaultUserPreferencesRepositoryProvider;
+
+    Provider<AdminWriteClient> provideAdminWriteClientProvider;
+
     Provider<ProfileRepositoryImpl> profileRepositoryImplProvider;
 
     Provider<ProfileRepository> bindProfileRepositoryProvider;
-
-    Provider<DefaultUserPreferencesRepository> defaultUserPreferencesRepositoryProvider;
 
     Provider<CurrentAffairsRepositoryImpl> currentAffairsRepositoryImplProvider;
 
@@ -755,12 +759,13 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
       this.appwriteAuthRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AppwriteAuthRepository>(singletonCImpl, 5));
       this.assetPaperRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AssetPaperRepository>(singletonCImpl, 10));
       this.cachedPaperRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<CachedPaperRepository>(singletonCImpl, 9));
-      this.profileRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 11);
+      this.defaultUserPreferencesRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<DefaultUserPreferencesRepository>(singletonCImpl, 11));
+      this.provideAdminWriteClientProvider = DoubleCheck.provider(new SwitchingProvider<AdminWriteClient>(singletonCImpl, 12));
+      this.profileRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 13);
       this.bindProfileRepositoryProvider = DoubleCheck.provider((Provider) (profileRepositoryImplProvider));
-      this.defaultUserPreferencesRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<DefaultUserPreferencesRepository>(singletonCImpl, 12));
-      this.currentAffairsRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 13);
+      this.currentAffairsRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 14);
       this.bindCurrentAffairsRepositoryProvider = DoubleCheck.provider((Provider) (currentAffairsRepositoryImplProvider));
-      this.roomExamSessionRepositoryProvider = new SwitchingProvider<>(singletonCImpl, 14);
+      this.roomExamSessionRepositoryProvider = new SwitchingProvider<>(singletonCImpl, 15);
       this.bindExamSessionRepositoryProvider = DoubleCheck.provider((Provider) (roomExamSessionRepositoryProvider));
     }
 
@@ -836,16 +841,19 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
           case 10: // com.tgp.mockexam.core.data.repository.AssetPaperRepository
           return (T) new AssetPaperRepository(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule), singletonCImpl.provideDispatcherProvider.get());
 
-          case 11: // com.tgp.mockexam.core.data.repository.ProfileRepositoryImpl
-          return (T) new ProfileRepositoryImpl(singletonCImpl.provideTablesClientProvider.get());
-
-          case 12: // com.tgp.mockexam.core.datastore.DefaultUserPreferencesRepository
+          case 11: // com.tgp.mockexam.core.datastore.DefaultUserPreferencesRepository
           return (T) new DefaultUserPreferencesRepository(singletonCImpl.provideDataStoreProvider.get());
 
-          case 13: // com.tgp.mockexam.core.data.repository.CurrentAffairsRepositoryImpl
+          case 12: // com.tgp.mockexam.core.network.AdminWriteClient
+          return (T) DataModule_Companion_ProvideAdminWriteClientFactory.provideAdminWriteClient(singletonCImpl.provideAppwriteConfigProvider.get());
+
+          case 13: // com.tgp.mockexam.core.data.repository.ProfileRepositoryImpl
+          return (T) new ProfileRepositoryImpl(singletonCImpl.provideTablesClientProvider.get());
+
+          case 14: // com.tgp.mockexam.core.data.repository.CurrentAffairsRepositoryImpl
           return (T) new CurrentAffairsRepositoryImpl(singletonCImpl.provideTablesClientProvider.get());
 
-          case 14: // com.tgp.mockexam.core.data.repository.RoomExamSessionRepository
+          case 15: // com.tgp.mockexam.core.data.repository.RoomExamSessionRepository
           return (T) new RoomExamSessionRepository(singletonCImpl.examSessionDao());
 
           default: throw new AssertionError(id);
