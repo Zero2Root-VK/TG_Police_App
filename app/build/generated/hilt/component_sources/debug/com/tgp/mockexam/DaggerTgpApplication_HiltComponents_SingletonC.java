@@ -770,8 +770,8 @@ public final class DaggerTgpApplication_HiltComponents_SingletonC {
     }
 
     @Override
-    public void injectTgpApplication(TgpApplication tgpApplication) {
-      injectTgpApplication2(tgpApplication);
+    public void injectTgpApplication(TgpApplication arg0) {
+      injectTgpApplication2(arg0);
     }
 
     @Override
