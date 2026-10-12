@@ -1,0 +1,2 @@
+-keep,allowobfuscation,allowshrinking class com.tgp.mockexam.feature.catalog.CatalogViewModel
+-keep,allowobfuscation,allowshrinking class com.tgp.mockexam.feature.catalog.CatalogViewModel
