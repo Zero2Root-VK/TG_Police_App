@@ -1,1 +1,0 @@
--keep,allowobfuscation,allowshrinking class com.tgp.mockexam.feature.exam.ExamViewModel
